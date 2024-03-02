@@ -20,10 +20,8 @@ final class TextEditingControllers {
 class AddNewResumePage extends HookConsumerWidget {
   /// The index of the resume to edit
   final int? index;
-  const AddNewResumePage({
-    super.key,
-    this.index,
-  });
+  final ResumeModel? resume;
+  const AddNewResumePage({super.key, this.index, this.resume});
 
   /// Swap items in a list
   List<T> swapListItems<T>(int indexA, int indexB, List<T> originalArray) {
@@ -69,12 +67,18 @@ class AddNewResumePage extends HookConsumerWidget {
 
       if (isEdit) {
         ref.read(resumeProvider.notifier).editResume(
-              ResumeModel(sections: sections, name: title),
+              ResumeModel(
+                sections: sections,
+                name: title,
+              ),
               index!,
             );
       } else {
         ref.read(resumeProvider.notifier).addResume(
-              ResumeModel(sections: sections, name: title),
+              ResumeModel(
+                sections: sections,
+                name: title,
+              ),
             );
       }
 
@@ -221,6 +225,7 @@ class AddNewResumePage extends HookConsumerWidget {
               onDownPressed: () => moveSectionDown(index),
             );
           },
+          shrinkWrap: true,
           itemCount: sectionsList.value.length,
         ),
       ),

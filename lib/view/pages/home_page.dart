@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:resume_builder_app/controller/resume_provider.dart';
-import 'package:resume_builder_app/view/pages/add_new_resume_page.dart';
+import 'package:resume_builder_app/view/pages/add_or_edit_resume_page.dart';
 import 'package:resume_builder_app/view/pages/view_resume_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
