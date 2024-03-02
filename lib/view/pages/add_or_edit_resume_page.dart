@@ -112,7 +112,12 @@ class AddNewResumePage extends HookConsumerWidget {
             TextButton(
               onPressed: () {
                 final title = titleController.text;
-                saveResume(title);
+                if (title.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Enter a Title")));
+                } else {
+                  saveResume(title);
+                }
               },
               child: const Text('Save'),
             ),
@@ -192,46 +197,54 @@ class AddNewResumePage extends HookConsumerWidget {
       return null;
     }, []);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(isEdit ? 'Edit Resume' : 'Add Resume'),
-        actions: [
-          IconButton(
-            onPressed: () => showAlertDialog(),
-            icon: const Icon(
-              Icons.done,
-            ),
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          top: 16,
-          left: 16,
-          right: 16,
-          bottom: 48,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(isEdit ? 'Edit Resume' : 'Add Resume'),
+          actions: [
+            IconButton(
+              onPressed: () => showAlertDialog(),
+              icon: const Icon(
+                Icons.done,
+              ),
+            )
+          ],
         ),
-        child: ListView.separated(
-          clipBehavior: Clip.none,
-          separatorBuilder: (context, index) => const SizedBox(height: 16),
-          itemBuilder: (context, index) {
-            final controllers = sectionsList.value[index];
+        body: Padding(
+          padding: const EdgeInsets.only(
+            top: 16,
+            left: 16,
+            right: 16,
+            bottom: 48,
+          ),
+          child: ListView.separated(
+            clipBehavior: Clip.none,
+            separatorBuilder: (context, index) => const SizedBox(height: 16),
+            itemBuilder: (context, index) {
+              final controllers = sectionsList.value[index];
 
-            return CardWidget(
-              contentController: controllers.contentController,
-              titleController: controllers.titleController,
-              onDeletePressed: () => removeSection(index),
-              onUpPressed: () => moveSectionUp(index),
-              onDownPressed: () => moveSectionDown(index),
-            );
-          },
-          shrinkWrap: true,
-          itemCount: sectionsList.value.length,
+              return CardWidget(
+                contentController: controllers.contentController,
+                titleController: controllers.titleController,
+                onDeletePressed: () => removeSection(index),
+                onUpPressed: () => moveSectionUp(index),
+                onDownPressed: () => moveSectionDown(index),
+              );
+            },
+            shrinkWrap: true,
+            itemCount: sectionsList.value.length,
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => addNewSection(),
-        child: const Icon(Icons.add),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => addNewSection(),
+          label: const Text(
+            "Add New Section",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.teal,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }

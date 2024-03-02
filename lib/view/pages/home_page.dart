@@ -60,6 +60,10 @@ class HomePage extends ConsumerWidget {
                 return ListTile(
                   onTap: () => viewResume(index),
                   title: Text(resume.name),
+                  leading: CircleAvatar(
+                    radius: 15,
+                    child: Text("${index + 1}"),
+                  ),
                 );
               },
               separatorBuilder: (context, index) => const SizedBox(height: 16),
