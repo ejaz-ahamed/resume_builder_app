@@ -17,7 +17,7 @@ class ViewResumePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(resume.name),
+        title: Text("Resume of ${resume.name}"),
         actions: [
           IconButton(
               onPressed: () {
